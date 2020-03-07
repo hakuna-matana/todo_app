@@ -1,0 +1,11 @@
+.todo-app {
+    background: #e2e4ea;
+    padding: 20px 10px;
+    border-radius: 4px;
+    margin: 2rem auto 0 auto;
+    max-width: 400px;
+}
+
+.top-panel {
+    margin: 1rem 0;
+}
