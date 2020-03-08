@@ -116,6 +116,8 @@ class App extends React.Component {
       case "done":
         todoData = done;
         break;
+      default:
+        break;
     }
 
     if (searchValue) {
