@@ -3,18 +3,23 @@ import "./ItemStatusFilter.css"
 
 class ItemStatusFilter extends React.Component {
 
-
   render() {
+    let buttons = this.props.filters.map(({name, key}) => {
+      let classNames = this.props.activeFilter === key ? 'btn-dark' : 'btn-outline-secondary';
+      return (
+        <button
+          key={key}
+          type="button"
+          className={`btn ${classNames}`}
+          onClick={() => this.props.onChangeFilter(key)}
+        >
+          {name}
+        </button>
+      )
+    });
+
     return <div className="btn-group">
-      <button
-        type="button"
-        className="btn btn-dark">All</button>
-      <button
-        type="button"
-        className="btn btn-outline-secondary">Active</button>
-      <button
-        type="button"
-        className="btn btn-outline-secondary">Done</button>
+      {buttons}
     </div>
   }
 }

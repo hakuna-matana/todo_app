@@ -8,10 +8,11 @@ import AddItem from "../AddItem";
 
 class App extends React.Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.maxId = this.todoData.reduce((previousValue, {id}) => {
       if (id > previousValue) return id;
+      return previousValue
     }, 0);
   }
 
@@ -22,8 +23,29 @@ class App extends React.Component {
     {id: 4,title: "Drink Coffee", important: false, done: false}
   ];
 
+  filters = [
+    {name: "All", key: "all"},
+    {name: "Active", key: "active"},
+    {name: "Done", key: "done"}
+  ]
+
   state = {
-    todoData: this.todoData
+    todoData: this.todoData,
+    activeFilter: "all",
+    searchValue: "",
+  }
+
+  changeActiveFilter = (key) => {
+    this.setState({
+      activeFilter: key
+    })
+  }
+
+  onSearchChange = (e) => {
+    let value = e.target.value;
+    this.setState({
+      searchValue: value
+    })
   }
 
   createTodoItem = (title) => {
@@ -45,6 +67,7 @@ class App extends React.Component {
   }
 
   addItem = (text) => {
+    if (!text) return;
     this.setState(({todoData}) => {
       let newItem = this.createTodoItem(text)
       return {
@@ -79,16 +102,37 @@ class App extends React.Component {
   }
 
   render() {
-    let {todoData} = this.state;
+    let {todoData, activeFilter, searchValue} = this.state;
 
-    const doneCount = todoData.filter((item) => item.done).length;
-    const todoCount = todoData.filter((item) => !item.done).length;
+    const done = todoData.filter((item) => item.done);
+    const todo = todoData.filter((item) => !item.done);
+    const doneCount = done.length;
+    const todoCount = todo.length;
+
+    switch(activeFilter) {
+      case "active":
+        todoData = todo;
+        break;
+      case "done":
+        todoData = done;
+        break;
+    }
+
+    if (searchValue) {
+      todoData = todoData.filter(({title}) => {
+        return title.toLowerCase().includes(searchValue.toLowerCase())
+      })
+    }
 ;
     return <div className={"todo-app"}>
       <AppHeader toDo={todoCount} done={doneCount}/>
       <div className={"top-panel d-flex"}>
-        <SearchPanel/>
-        <ItemStatusFilter/>
+        <SearchPanel onChange={this.onSearchChange}/>
+        <ItemStatusFilter
+          onChangeFilter={this.changeActiveFilter}
+          filters={this.filters}
+          activeFilter={activeFilter}
+        />
       </div>
       <TodoList
         todos={todoData}
