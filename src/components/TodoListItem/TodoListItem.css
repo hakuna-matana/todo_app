@@ -1,4 +1,12 @@
 .todo-list-item {
+    display: flex;
+    align-items: center;
+}
+.custom-control {
+    display: flex;
+}
+
+.todo-list-item {
     font-size: 1.25rem;
 }
 
@@ -21,4 +29,26 @@
 .todo-list-item.important .todo-list-item-label {
     font-weight: bold;
     color: steelblue;
+}
+
+.btn-group {
+    margin-left: auto;
+}
+
+.custom-control-label {
+    cursor: pointer;
+}
+
+label.size-lg::before, label.size-lg::after {
+    width: 1.2rem;
+    height: 1.2rem;
+}
+
+.important .todo-list-item-title {
+    font-weight: bold;
+    color: #547d9a;
+}
+
+.done .todo-list-item-title {
+    text-decoration: line-through;
 }

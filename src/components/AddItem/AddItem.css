@@ -1,0 +1,11 @@
+.bottom-block {
+    margin-top: 10px;
+}
+
+.bottom-block input {
+    margin-right: 5px;
+}
+
+.bottom-block button {
+    white-space: nowrap;
+}
